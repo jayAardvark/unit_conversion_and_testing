@@ -1,5 +1,7 @@
 function ConvertHandler() {
   
+  let testSpellOut;
+  
   this.getNum = function(input) {
     var result;
     var result2;
@@ -48,20 +50,19 @@ function ConvertHandler() {
   
   this.getReturnUnit = function(initUnit) {
     var result;
-    //convert initUnit to lowercase then convert
+   
     if(initUnit !== false) {
-      let initUnitLC = initUnit.toLowerCase();
-      if (initUnitLC === 'gal') {
+      if (initUnit === 'gal') {
         result = 'l';
-      }else if(initUnitLC === 'l'){
+      }else if(initUnit === 'l'){
         result = 'gal';
-      }else if(initUnitLC === 'mi'){
+      }else if(initUnit === 'mi'){
         result = 'km';
-      }else if(initUnitLC === 'km'){
+      }else if(initUnit === 'km'){
         result = 'mi';
-      }else if(initUnitLC === 'lbs'){
+      }else if(initUnit === 'lbs'){
         result = 'kg';
-      }else if(initUnitLC === 'kg'){
+      }else if(initUnit === 'kg'){
         result = 'lbs';
       }
       return result;
@@ -70,6 +71,25 @@ function ConvertHandler() {
 
   this.spellOutUnit = function(unit) {
     var result;
+/*    if(unit === 'gal' || unit.toLowerCase() === 'gallons'){
+      result = 'gallons';
+    }else if(unit === 'l' || unit.toLowerCase() === 'liters'){
+      result = 'liters';
+    }    
+*/
+    if(unit === 'gal'){
+      result = 'gallons';
+    }else if (unit === 'l'){
+      result = 'liters';
+    }else if (unit === 'mi'){
+      result = 'miles';
+    }else if (unit === 'km'){
+      result = 'kilometers';
+    }else if (unit === 'lbs'){
+      result = 'pounds';
+    }else if (unit === 'kg'){
+      result = 'kilograms';
+    }
     
     return result;
   };
@@ -91,6 +111,7 @@ function ConvertHandler() {
         result = initNum * lToGal;
       }else if(initUnitLC === 'mi'){
         result = initNum * miToKm;
+        //result = result.toFixed(5);
       }else if(initUnitLC === 'km'){
         result = initNum * kmToMi;
       }else if(initUnitLC === 'lbs'){
@@ -104,7 +125,11 @@ function ConvertHandler() {
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
     var result;
-    
+    //convert unit abbreviations to whole unit words
+    //let roundInit = initNum.toFixed(5);
+    //let roundRet = returnNum.toFixed(5);
+    result = initNum + ' ' + this.spellOutUnit(initUnit) + ' converts to ' + returnNum + ' ' + this.spellOutUnit(returnUnit);
+    //result = result.toString();
     return result;
   };
   
