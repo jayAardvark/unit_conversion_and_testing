@@ -32,33 +32,40 @@ function ConvertHandler() {
   
   this.getUnit = function(input) {
     var result;
+    let validUnits = ['gal','l','mi','km','lbs','kg'];
     //split on anything NOT letters
     let regex = /[^a-zA-Z]/gm;
     let splitInput = input.split(regex);
     //join without commas
-    result = splitInput.join("");
-    return result;
+    result = splitInput.join("").toLowerCase();
+    //return result if unit is acceptable/valid
+    if(validUnits.includes(result)){
+      return result;
+    }else {
+      return false;
+    }
   };
   
   this.getReturnUnit = function(initUnit) {
     var result;
     //convert initUnit to lowercase then convert
-    let initUnitLC = initUnit.toLowerCase();
-    if (initUnitLC === 'gal') {
-      result = 'l';
-    }else if(initUnitLC === 'l'){
-      result = 'gal';
-    }else if(initUnitLC === 'mi'){
-      result = 'km';
-    }else if(initUnitLC === 'km'){
-      result = 'mi';
-    }else if(initUnitLC === 'lbs'){
-      result = 'kg';
-    }else if(initUnitLC === 'kg'){
-      result = 'lbs';
+    if(initUnit !== false) {
+      let initUnitLC = initUnit.toLowerCase();
+      if (initUnitLC === 'gal') {
+        result = 'l';
+      }else if(initUnitLC === 'l'){
+        result = 'gal';
+      }else if(initUnitLC === 'mi'){
+        result = 'km';
+      }else if(initUnitLC === 'km'){
+        result = 'mi';
+      }else if(initUnitLC === 'lbs'){
+        result = 'kg';
+      }else if(initUnitLC === 'kg'){
+        result = 'lbs';
+      }
+      return result;
     }
-    
-    return result;
   };
 
   this.spellOutUnit = function(unit) {
@@ -76,22 +83,23 @@ function ConvertHandler() {
     const kmToMi = 0.621371;
     var result;
       //convert initUnit to lowercase then return appropriate conversion number
-    let initUnitLC = initUnit.toLowerCase();
-    if (initUnitLC === 'gal') {
-      result = initNum * galToL;
-    }else if(initUnitLC === 'l'){
-      result = initNum * lToGal;
-    }else if(initUnitLC === 'mi'){
-      result = initNum * miToKm;
-    }else if(initUnitLC === 'km'){
-      result = initNum * kmToMi;
-    }else if(initUnitLC === 'lbs'){
-      result = initNum * lbsToKg;
-    }else if(initUnitLC === 'kg'){
-      result = initNum * kgToLbs;
+    if(initUnit !== false){
+      let initUnitLC = initUnit.toLowerCase();
+      if (initUnitLC === 'gal') {
+        result = initNum * galToL;
+      }else if(initUnitLC === 'l'){
+        result = initNum * lToGal;
+      }else if(initUnitLC === 'mi'){
+        result = initNum * miToKm;
+      }else if(initUnitLC === 'km'){
+        result = initNum * kmToMi;
+      }else if(initUnitLC === 'lbs'){
+        result = initNum * lbsToKg;
+      }else if(initUnitLC === 'kg'){
+        result = initNum * kgToLbs;
+      }
+      return result;
     }
-    
-    return result;
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
