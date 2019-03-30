@@ -51,6 +51,61 @@ function ConvertHandler() {
   this.getReturnUnit = function(initUnit) {
     var result;
    
+function ConvertHandler() {
+  
+  let testSpellOut;
+  
+  this.getNum = function(input) {
+    var result;
+    var result2;
+    //let input = "23dog";
+    //1. try to separate input on whitespace or letter
+    //clue: use indexOf to check for whitespace or letter
+    //2. store these into array? 
+    //regex to target input by letters or whitespace
+    let regex1 = /[a-zA-Z]|\s/gm;
+    //regex to target input by numbers or whitespace
+    let regex2 = /[0-9]|\s/gm;
+    //split on the 2 regex
+    let splitInput = input.split(regex1);
+    let splitInput2 = input.split(regex2);
+    //get rid of resulting commas from initial split
+    splitInput = splitInput.join("");
+    splitInput2 = splitInput2.join("");
+    //input number defaults to 1 if there is no input number
+    if(splitInput == ""){
+      result = '1';
+    }else {
+      //include eval() to account for the fact that isNaN('3.2/3') === true. this is not what we want
+      //using eval is closer but not recommended for security's sake
+      result = eval(splitInput);
+    }
+ /*
+    console.log(result);
+    console.log(typeof result);
+ */
+    return result;
+  };
+  
+  this.getUnit = function(input) {
+    var result;
+    let validUnits = ['gal','l','mi','km','lbs','kg'];
+    //split on anything NOT letters
+    let regex = /[^a-zA-Z]/gm;
+    let splitInput = input.split(regex);
+    //join without commas
+    result = splitInput.join("").toLowerCase();
+    //return result if unit is acceptable/valid
+    if(validUnits.includes(result)){
+      return result;
+    }else {
+      return false;
+    }
+  };
+  
+  this.getReturnUnit = function(initUnit) {
+    var result;
+   
     if(initUnit !== false) {
       if (initUnit === 'gal') {
         result = 'l';
